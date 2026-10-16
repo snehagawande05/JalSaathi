@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --color-brand: #0284C7;
+  --color-brand-dark: #0369A1;
+  --color-brand-light: #E0F2FE;
+  --color-brand-aqua: #0EA5E9;
+  --color-surface: #F8FAFC;
+  --color-line: #E2E8F0;
+  --color-ink: #0F172A;
+  --color-ink-muted: #64748B;
+  --color-status-reported: #EF4444;
+  --color-status-verified: #F59E0B;
+  --color-status-progress: #3B82F6;
+  --color-status-resolved: #10B981;
+  --color-status-rejected: #64748B;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-aqua);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+}

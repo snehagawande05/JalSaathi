@@ -94,36 +94,36 @@ export default function HomePage() {
 
   return (
     <div className="space-y-12 sm:space-y-16">
-      {/* 1. Hero Section — photorealistic city skyline banner */}
-      <section className="relative overflow-hidden rounded-3xl min-h-[360px] sm:min-h-[440px] lg:min-h-[500px] flex items-center">
+      {/* 1. Hero Section — city skyline banner matching design mockup */}
+      <section className="relative overflow-hidden rounded-3xl min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] flex items-center border border-sky-100/80 shadow-sm bg-sky-50">
 
-        {/* ── Background: photorealistic city photo ── */}
+        {/* ── Background: city skyline photo ── */}
         <Image
-          src="/city-harmony.jpg"
+          src="/city-hero.jpg"
           alt="Nagpur city skyline"
           fill
-          className="object-cover object-[center_40%]"
+          className="object-cover object-right md:object-center"
           priority
           sizes="100vw"
         />
 
-        {/* Soft left fade so headline stays readable; photo + logo stay visible */}
-        <div className="absolute inset-y-0 left-0 w-full lg:w-[42%] bg-gradient-to-r from-white/80 via-white/40 to-transparent" />
+        {/* Soft fade from left: gives clean white/sky canvas for text while letting the city and lake shine */}
+        <div className="absolute inset-0 bg-gradient-to-r from-sky-50/95 via-sky-50/85 via-45% to-sky-50/20 md:to-transparent" />
 
         {/* ── Content grid ── */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-14 py-10 sm:py-14">
+        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-14 py-8 sm:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 
             {/* Left — headline + ctas */}
-            <div className="lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 space-y-4 sm:space-y-5">
               {/* Tag Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50/90 border border-emerald-200/70 px-3.5 py-1 text-xs font-semibold text-emerald-800 backdrop-blur-sm">
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50/95 border border-emerald-200/80 px-3.5 py-1 text-xs font-semibold text-emerald-800 shadow-xs">
                 <span>🌿</span>
                 <span>A Cleaner Nagpur • A Healthier Tomorrow</span>
               </div>
 
               {/* Headline */}
-              <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-black tracking-tight text-slate-900 leading-[1.12] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)]">
+              <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-slate-900 leading-[1.14]">
                 Report Water &amp; Sanitation Issues. Build a{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-500">
                   Cleaner, Healthier Community.
@@ -131,7 +131,7 @@ export default function HomePage() {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-sm sm:text-base text-slate-700 max-w-lg leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed">
                 JalSaathi is a civic platform where <strong className="text-slate-900">residents</strong> report water outages, pipe leaks, and blocked drains with a map pin, track resolution in real time, and help authorities eliminate recurring hotspots.
               </p>
 
@@ -139,14 +139,14 @@ export default function HomePage() {
               <div className="pt-1 flex flex-wrap items-center gap-3">
                 <Link
                   href="/report"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-sky-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-600/30 hover:bg-sky-500 transition-all transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-cyan-700 hover:bg-cyan-800 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-700/25 transition-all transform hover:-translate-y-0.5"
                 >
                   <Edit3 className="h-4 w-4" />
                   <span>Report an Issue</span>
                 </Link>
                 <a
                   href="#live-map"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-sky-300 bg-white/80 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-sky-700 hover:bg-sky-50 transition-all"
+                  className="inline-flex items-center gap-2 rounded-2xl border-2 border-cyan-600/70 bg-white/90 hover:bg-cyan-50 px-7 py-3.5 text-sm font-bold text-cyan-800 transition-all shadow-xs"
                 >
                   <Map className="h-4 w-4" />
                   <span>Explore Map</span>
@@ -154,19 +154,40 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Center spacer — droplet logo is already in the photo */}
-            <div className="hidden lg:block lg:col-span-3" />
+            {/* Center — Water Droplet + Leaf Logo in the sky */}
+            <div className="hidden lg:flex lg:col-span-3 justify-center items-center -mt-6">
+              <svg viewBox="0 0 120 140" className="w-24 sm:w-28 lg:w-32 drop-shadow-lg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Water droplet outer */}
+                <path
+                  d="M60 12 C60 12 18 68 18 92 C18 116 38 132 60 132 C82 132 102 116 102 92 C102 68 60 12 60 12Z"
+                  fill="url(#dropletGradient)"
+                />
+                {/* Green Leaf inside droplet */}
+                <path
+                  d="M60 58 C60 58 78 72 78 90 C78 104 70 114 60 118 C62 98 56 84 44 74 C50 66 60 58 60 58Z"
+                  fill="#10b981"
+                />
+                {/* Soft highlight reflection */}
+                <ellipse cx="44" cy="74" rx="7" ry="13" fill="white" opacity="0.35" transform="rotate(-22 44 74)" />
+                <defs>
+                  <linearGradient id="dropletGradient" x1="18" y1="12" x2="102" y2="132" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#38bdf8" />
+                    <stop offset="100%" stopColor="#0284c7" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
 
-            {/* Right — cursive tagline in the sky */}
-            <div className="lg:col-span-4 flex justify-end items-start lg:-mt-10">
-              <div className="text-right space-y-0.5 drop-shadow-[0_2px_8px_rgba(255,255,255,0.85)]">
-                <p className="font-serif italic text-2xl sm:text-3xl lg:text-4xl font-bold text-sky-800 leading-snug tracking-wide">
+            {/* Right — Slogan in cursive style */}
+            <div className="hidden sm:flex sm:col-span-12 lg:col-span-4 justify-end items-start lg:-mt-8">
+              <div className="text-right space-y-0.5">
+                <p className="font-serif italic text-2xl sm:text-3xl lg:text-[34px] font-bold text-sky-800 leading-snug tracking-wide drop-shadow-sm">
                   Clean Water
                 </p>
-                <p className="font-serif italic text-2xl sm:text-3xl lg:text-4xl font-bold text-sky-800 leading-snug tracking-wide">
+                <p className="font-serif italic text-2xl sm:text-3xl lg:text-[34px] font-bold text-sky-800 leading-snug tracking-wide drop-shadow-sm">
                   Healthy Communities
                 </p>
-                <p className="font-serif italic text-2xl sm:text-3xl lg:text-4xl font-bold text-sky-800 leading-snug tracking-wide">
+                <p className="font-serif italic text-2xl sm:text-3xl lg:text-[34px] font-bold text-sky-800 leading-snug tracking-wide drop-shadow-sm">
                   Stronger Together
                 </p>
                 <div className="ml-auto mt-2 h-0.5 w-3/4 bg-gradient-to-l from-sky-500 to-transparent rounded-full" />

@@ -8,10 +8,10 @@ import type { UserProfile } from "./types";
 interface AuthContextType {
   user: UserProfile | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<UserProfile | null>;
   logout: () => Promise<void>;
   quickLogin: (account: "admin" | "citizen1" | "citizen2" | "citizen3") => Promise<void>;
-  refreshProfile: () => Promise<void>;
+  refreshProfile: () => Promise<UserProfile | null>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,23 +27,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchProfile = useCallback(async () => {
+  const fetchProfile = useCallback(async (): Promise<UserProfile | null> => {
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session?.user) {
         setUser(null);
         setLoading(false);
-        return;
+        return null;
       }
 
       // Fetch user profile from Express server
       const profile = await apiFetch<UserProfile>("/api/me");
-      setUser({
+      const fullProfile: UserProfile = {
         ...profile,
         email: sessionData.session.user.email,
-      });
+      };
+      setUser(fullProfile);
+      return fullProfile;
     } catch {
       setUser(null);
+      return null;
     } finally {
       setLoading(false);
     }
@@ -68,14 +71,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [fetchProfile]);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<UserProfile | null> => {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setLoading(false);
       throw new Error(error.message);
     }
-    await fetchProfile();
+    const profile = await fetchProfile();
+    return profile;
   };
 
   const logout = async () => {

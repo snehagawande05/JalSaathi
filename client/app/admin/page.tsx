@@ -41,6 +41,7 @@ import {
   Printer,
   Sliders,
   Check,
+  LogOut,
 } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
 import { apiFetch } from "@/lib/api";
@@ -98,7 +99,7 @@ interface AdminUser {
 }
 
 export default function AdminPortalPage() {
-  const { user, loading: authLoading, quickLogin } = useAuth();
+  const { user, loading: authLoading, quickLogin, logout } = useAuth();
 
   // Navigation tab state (8 screens matching design mockup)
   const [activeTab, setActiveTab] = useState<
@@ -362,10 +363,10 @@ export default function AdminPortalPage() {
         </div>
       )}
 
-      {/* Main Admin Portal Container */}
-      <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col lg:flex-row min-h-[850px]">
+      {/* Main Admin Portal Container — full-bleed standalone web portal */}
+      <div className="w-full min-h-screen bg-slate-100/60 flex flex-col lg:flex-row">
         {/* ── LEFT SIDEBAR NAVIGATION ── */}
-        <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-col justify-between shrink-0">
+        <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between shrink-0 lg:min-h-screen lg:sticky lg:top-0">
           <div>
             {/* Logo Brand */}
             <div className="p-5 border-b border-slate-200/80 flex items-center gap-2.5">
@@ -431,7 +432,7 @@ export default function AdminPortalPage() {
           </div>
 
           {/* Sidebar Footer info */}
-          <div className="p-4 border-t border-slate-200/80 bg-white/60">
+          <div className="p-4 border-t border-slate-200/80 bg-slate-50/70">
             <div className="flex items-center justify-between text-[11px] text-slate-500">
               <span>Nagpur Municipal Net</span>
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -442,7 +443,7 @@ export default function AdminPortalPage() {
         {/* ── RIGHT MAIN CONTENT AREA ── */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Top Header Bar */}
-          <header className="px-6 py-4 border-b border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <header className="px-6 py-4 border-b border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-0 z-30">
             {/* Global Search Bar */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
@@ -456,7 +457,15 @@ export default function AdminPortalPage() {
             </div>
 
             {/* Notification & User Profile */}
-            <div className="flex items-center gap-3 self-end sm:self-auto">
+            <div className="flex items-center gap-2.5 self-end sm:self-auto">
+              <Link
+                href="/"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                title="View Public Citizen Website"
+              >
+                <span>🌐 Public Site</span>
+              </Link>
+
               <button
                 onClick={loadAdminData}
                 disabled={loading}
@@ -480,6 +489,14 @@ export default function AdminPortalPage() {
                   <p className="text-[10px] text-slate-400 font-medium">Administrator</p>
                 </div>
               </div>
+
+              <button
+                onClick={() => logout()}
+                className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition ml-1"
+                title="Sign Out"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+              </button>
             </div>
           </header>
 

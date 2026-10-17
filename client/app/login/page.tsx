@@ -50,10 +50,15 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      await login(email, password);
-      router.push("/");
-    } catch (err: any) {
-      setError(err?.message || "Invalid credentials. Please try again.");
+      const profile = await login(email, password);
+      if (profile?.role === "admin" || email.toLowerCase().includes("admin")) {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Invalid credentials. Please try again.";
+      setError(msg);
     } finally {
       setLoading(false);
     }
